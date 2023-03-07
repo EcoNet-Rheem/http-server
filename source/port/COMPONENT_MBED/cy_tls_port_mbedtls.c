@@ -178,7 +178,7 @@ static cy_rslt_t tls_init_root_ca_certificates(mbedtls_x509_crt** root_ca_certs,
     return CY_RSLT_SUCCESS;
 }
 
-cy_rslt_t cy_tls_init_root_ca_certificates( const char* trusted_ca_certificates, const uint32_t length )
+cy_rslt_t cy_tls_init_global_root_ca_certificates( const char* trusted_ca_certificates, const uint32_t length )
 {
     return tls_init_root_ca_certificates(&root_ca_certificates, trusted_ca_certificates, length);
 }
@@ -512,7 +512,7 @@ cy_rslt_t cy_tls_set_context_root_ca_certificates( cy_tls_context_t* context, co
     return tls_init_root_ca_certificates(&context->root_ca_certificates, trusted_ca_certificates, cert_length);
 }
 
-cy_rslt_t cy_tls_deinit_root_ca_certificates( void )
+cy_rslt_t cy_tls_deinit_global_root_ca_certificates( void )
  {
     tls_deinit_root_ca_certificates(root_ca_certificates);
     root_ca_certificates = NULL;

@@ -431,7 +431,7 @@ cy_rslt_t cy_http_server_start( cy_http_server_t server_handle )
     if( server_obj->is_secure == true )
     {
         /* Initialize server certificate & private key */
-        result = cy_tls_init_identity( &(server_obj->identity),
+        result = cy_tls_init_new_identity( &(server_obj->identity),
                                  (const char*) (server_obj->security_credentials)->private_key,
                                  (server_obj->security_credentials)->key_length,
                                  (server_obj->security_credentials)->certificate,
@@ -445,13 +445,13 @@ cy_rslt_t cy_http_server_start( cy_http_server_t server_handle )
         /* Initialize root CA certificate */
         if( (server_obj->security_credentials)->root_ca_certificate != NULL )
         {
-            result = cy_tls_init_root_ca_certificates( (const char*) ((server_obj->security_credentials)->root_ca_certificate),
+            result = cy_tls_init_global_root_ca_certificates( (const char*) ((server_obj->security_credentials)->root_ca_certificate),
                                                        (server_obj->security_credentials)->root_ca_certificate_length );
             if( result != CY_RSLT_SUCCESS )
             {
                 hs_cy_log_msg( CYLF_MIDDLEWARE, CY_LOG_ERR, "\nTLS init root CA certificate failed : %d", (int) result );
                 /* Deinitialize TLS identity */
-                result = cy_tls_deinit_identity( &(server_obj->identity) );
+                result = cy_tls_deinit_delete_identity( &(server_obj->identity) );
                 if( result != CY_RSLT_SUCCESS )
                 {
                     hs_cy_log_msg( CYLF_MIDDLEWARE, CY_LOG_ERR, "\nTLS deinit identity failed : %d", (int) result );
@@ -475,10 +475,10 @@ cy_rslt_t cy_http_server_start( cy_http_server_t server_handle )
         if( result != CY_RSLT_SUCCESS )
         {
             hs_cy_log_msg( CYLF_MIDDLEWARE, CY_LOG_ERR, "\nFailed to start HTTPS server : %d ", (int) result );
-            cy_tls_deinit_root_ca_certificates();
+            cy_tls_deinit_global_root_ca_certificates();
 
             /* Deinitialize TLS identity */
-            result = cy_tls_deinit_identity( &(server_obj->identity) );
+            result = cy_tls_deinit_delete_identity( &(server_obj->identity) );
             if( result != CY_RSLT_SUCCESS )
             {
                 hs_cy_log_msg( CYLF_MIDDLEWARE, CY_LOG_ERR, "\nTLS deinit identity failed : %d ", (int) result );
@@ -541,10 +541,10 @@ cy_rslt_t cy_http_server_stop( cy_http_server_t server_handle )
 
     if( server_obj->is_secure == true )
     {
-        cy_tls_deinit_root_ca_certificates();
+        cy_tls_deinit_global_root_ca_certificates();
 
         /* Deinitialize TLS identity */
-        result = cy_tls_deinit_identity( &(server_obj->identity) );
+        result = cy_tls_deinit_delete_identity( &(server_obj->identity) );
         if( result != CY_RSLT_SUCCESS )
         {
             hs_cy_log_msg( CYLF_MIDDLEWARE, CY_LOG_ERR, "TLS deinit identity failed : %d \n", (int) result );

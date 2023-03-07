@@ -111,7 +111,7 @@ cy_rslt_t cy_tcp_server_network_deinit( void )
     return result;
 }
 
-cy_rslt_t cy_tls_init_root_ca_certificates( const char* trusted_ca_certificates,
+cy_rslt_t cy_tls_init_global_root_ca_certificates( const char* trusted_ca_certificates,
                                             const uint32_t length )
 {
     cy_rslt_t result = CY_RSLT_SUCCESS;
@@ -127,7 +127,7 @@ cy_rslt_t cy_tls_init_root_ca_certificates( const char* trusted_ca_certificates,
     return result;
 }
 
-cy_rslt_t cy_tls_deinit_root_ca_certificates( void )
+cy_rslt_t cy_tls_deinit_global_root_ca_certificates( void )
 {
     cy_rslt_t result = CY_RSLT_SUCCESS;
 
@@ -142,7 +142,7 @@ cy_rslt_t cy_tls_deinit_root_ca_certificates( void )
     return result;
 }
 
-cy_rslt_t cy_tls_init_identity( cy_tls_identity_t* identity,
+cy_rslt_t cy_tls_init_new_identity( cy_tls_identity_t* identity,
                                 const char* private_key,
                                 const uint32_t key_length,
                                 const uint8_t* certificate_data,
@@ -165,7 +165,7 @@ cy_rslt_t cy_tls_init_identity( cy_tls_identity_t* identity,
     return result;
 }
 
-cy_rslt_t cy_tls_deinit_identity( cy_tls_identity_t* identity )
+cy_rslt_t cy_tls_deinit_delete_identity( cy_tls_identity_t* identity )
 {
     cy_rslt_t result = CY_RSLT_SUCCESS;
 
@@ -757,6 +757,7 @@ cy_rslt_t cy_tcp_server_disconnect_socket( cy_tcp_server_t* server, cy_tcp_socke
 /* These are helper functions for TLS wrapper to communicate with
  * MBEDOS TCPIP C++ APIs.
  */
+#if 0 // Not Used
 cy_rslt_t cy_tls_generic_start_tls_with_ciphers( cy_tls_context_t* tls_context, void* referee, cy_tls_certificate_verification_t verification )
 {
     /* Dummy implementation of cy_tls_generic_start_tls_with_ciphers */
@@ -774,7 +775,7 @@ cy_rslt_t cy_tls_deinit_context( cy_tls_context_t* tls_context )
     /* Dummy implementation of cy_tls_deinit_context */
     return CY_RSLT_SUCCESS;
 }
-
+#endif
 cy_rslt_t cy_tls_set_context_root_ca_certificates( cy_tls_context_t* context, const char* trusted_ca_certificates, const uint32_t cert_length )
 {
     /* Dummy implementation of cy_tls_set_context_root_ca_certificates */

@@ -60,12 +60,13 @@ typedef enum
 } cy_tls_certificate_verification_t;
 
 
+#if 0 // Not Used
 /** Initializes TLS context handle
  *
  * @param[in] context   : A pointer to a cy_tls_context_t context object that will be initialized.
  *                        The context object is analogous to a cookie which has all the information to process a TLS message.
  *                        This is the entity that has all the book-keeping information (TLS handshake state, TLS session etc.).
- * @param[in]  identity : A pointer to a cy_tls_identity_t object initialized with @ref cy_tls_init_identity.
+ * @param[in]  identity : A pointer to a cy_tls_identity_t object initialized with @ref cy_tls_init_new_identity.
  * @param[in]  peer_cn  : Expected peer CommonName (or NULL)
  *
  * @return cy_rslt_t    : CY_RESULT_SUCCESS on success, refer to cy_result_mw.h in connectivity-utilities for error
@@ -79,7 +80,7 @@ cy_rslt_t cy_tls_init_context( cy_tls_context_t* context, cy_tls_identity_t* ide
  * @return cy_rslt_t    : CY_RESULT_SUCCESS on success, refer to cy_result_mw.h in connectivity-utilities for error
  */
 cy_rslt_t cy_tls_deinit_context( cy_tls_context_t* context );
-
+#endif
 /** Initialize the trusted root CA certificates specific to the TLS context.
  *
  * @param[in] context                 : A pointer to a cy_tls_context_t context object
@@ -103,13 +104,13 @@ cy_rslt_t cy_tls_set_context_root_ca_certificates( cy_tls_context_t* context, co
  *
  * @return cy_rslt_t    : CY_RESULT_SUCCESS on success, refer to cy_result_mw.h in connectivity-utilities for error
  */
-cy_rslt_t cy_tls_init_root_ca_certificates( const char* trusted_ca_certificates, const uint32_t cert_length );
+cy_rslt_t cy_tls_init_global_root_ca_certificates( const char* trusted_ca_certificates, const uint32_t cert_length );
 
 /** De-initialise the trusted root CA certificates
  *
  * @return cy_rslt_t    : CY_RESULT_SUCCESS on success, refer to cy_result_mw.h in connectivity-utilities for error
  */
-cy_rslt_t cy_tls_deinit_root_ca_certificates( void );
+cy_rslt_t cy_tls_deinit_global_root_ca_certificates( void );
 
 /** Initializes a TLS identity using a supplied certificate and private key
  *
@@ -122,7 +123,7 @@ cy_rslt_t cy_tls_deinit_root_ca_certificates( void );
  *
  * @return cy_rslt_t    : CY_RESULT_SUCCESS on success, refer to cy_result_mw.h in connectivity-utilities for error
  */
-cy_rslt_t cy_tls_init_identity( cy_tls_identity_t* identity, const char* private_key, const uint32_t key_length, const uint8_t* certificate_data, uint32_t certificate_length );
+cy_rslt_t cy_tls_init_new_identity( cy_tls_identity_t* identity, const char* private_key, const uint32_t key_length, const uint8_t* certificate_data, uint32_t certificate_length );
 
 /** DeiInitializes a TLS identity
  *
@@ -130,8 +131,9 @@ cy_rslt_t cy_tls_init_identity( cy_tls_identity_t* identity, const char* private
  *
  * @return cy_rslt_t    : CY_RESULT_SUCCESS on success, refer to cy_result_mw.h in connectivity-utilities for error
  */
-cy_rslt_t cy_tls_deinit_identity( cy_tls_identity_t* identity );
+cy_rslt_t cy_tls_deinit_delete_identity( cy_tls_identity_t* identity );
 
+#if 0 // Not Used
 /** Start TLS on a TCP Connection with a particular set of cipher suites
  *
  * Start Transport Layer Security (successor to SSL) on a TCP Connection
@@ -145,9 +147,7 @@ cy_rslt_t cy_tls_deinit_identity( cy_tls_identity_t* identity );
  *
  */
 cy_rslt_t cy_tls_generic_start_tls_with_ciphers( cy_tls_context_t* tls_context, void* referee, cy_tls_certificate_verification_t verification );
-
-/** @} */
-
+#endif
 
 #ifdef __cplusplus
 } /*extern "C" */
